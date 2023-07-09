@@ -16,7 +16,7 @@ import Dispatch
 extension TelegramBot {
 	/// Perform synchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `lastError` contains the details.
-	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:]) -> TResult? where TResult: Decodable {
+    public func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:]) -> TResult? where TResult: Decodable {
 		
 		var retval: TResult!
 		let sem = DispatchSemaphore(value: 0)
@@ -33,13 +33,13 @@ extension TelegramBot {
 	
 	/// Perform synchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `lastError` contains the details.
-	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?...) -> TResult? where TResult: Decodable {
+    public func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?...) -> TResult? where TResult: Decodable {
 		return requestSync(endpoint, mergeParameters(parameters))
 	}
 	
 	/// Perform asynchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `error` contains the details.
-    internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+    public func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		
         startDataTaskForEndpoint(endpoint, parameters: parameters, resultType: TResult.self) {
 			rawResult, error in
@@ -55,13 +55,13 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `error` contains the details.
-	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+    public func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of Decodable  on success. Nil on error, in which case `error` contains the details.
-	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+    public func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		
         startDataTaskForEndpoint(endpoint, parameters: parameters, resultType: [TResult].self) {
 			rawResult, error in
@@ -77,7 +77,7 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of Decodable  on success. Nil on error, in which case `error` contains the details.
-	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+	public func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		return requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	
